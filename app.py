@@ -87,9 +87,8 @@ def images_analysis():
     retval = ResultMsg(0, "success").__dict__
     result = []
     item = {"image_id": "xxx1", "result": result, "private_data": {}}
-    imgPartList = []
-    imgPartList.append(ImagePart(101, 89, 100, 200).__dict__)
-    result.append({"attr_data": {"eventSort": 33892184}, "img_part_list": imgPartList})
+    img_part_list = [ImagePart(101, 89, 100, 200).__dict__]
+    result.append({"attr_data": {"eventSort": 33892184}, "img_part_list": img_part_list})
     retval["data"] = []
     retval["data"].append(item)
     return jsonify(retval)
