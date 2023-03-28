@@ -7,6 +7,13 @@ class MyEncoder(JSONEncoder):
         return obj.__dict__
 
 
+class ResultMsg:
+    def __init__(self, code, msg):
+        super(ResultMsg, self).__init__()
+        self.code = code
+        self.msg = msg
+
+
 class CapabilityInfo:
     def __init__(self, max_tps, cur_tps, max_cvs, cur_cvs):
         """
@@ -46,3 +53,11 @@ class CapabilityInfo:
 
     def __repr__(self):
         return self.__str__()
+
+
+class TaskInfo:
+    def __init__(self, task_id, status, abnormal_msg):
+        super().__init__()
+        self.task_id = task_id  # 视频分析任务唯一标识 6.3返回的task_id
+        self.status = status  # 任务状态枚举 0：运行 1：完成 2：异常
+        self.abnormal_msg = abnormal_msg  # 任务异常原因
