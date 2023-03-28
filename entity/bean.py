@@ -61,3 +61,11 @@ class TaskInfo:
         self.task_id = task_id  # 视频分析任务唯一标识 6.3返回的task_id
         self.status = status  # 任务状态枚举 0：运行 1：完成 2：异常
         self.abnormal_msg = abnormal_msg  # 任务异常原因
+
+
+class ImagePart:
+    def __init__(self, left_x, left_y, width, high):
+        self.left_x = left_x
+        self.left_y = left_y
+        self.width = width
+        self.high = high

@@ -1,7 +1,7 @@
 import requests
 from flask import Flask, request, jsonify
 import json
-from entity.bean import CapabilityInfo, MyEncoder, ResultMsg, TaskInfo
+from entity.bean import CapabilityInfo, MyEncoder, ResultMsg, TaskInfo, ImagePart
 
 app = Flask(__name__)
 
@@ -72,6 +72,26 @@ def stop_del_task(task_id):
     """停止并删除视频流分析任务"""
     retval = ResultMsg(0, "success").__dict__
     retval["task_id"] = task_id
+    return jsonify(retval)
+
+
+@app.route("/api/ads/v1/images-anlysis", methods=["POST"])
+def images_analysis():
+    """图片分析(json+base64)"""
+    params = request.get_data()
+    if params is None or params == "":
+        return jsonify("Parameter can not be empty.", status=403)
+    # {image_list:{image_id, image_type, data, url， analysis_rules， private_data}， sync}
+    param_dict = json.loads(params)
+    # 封装数据
+    retval = ResultMsg(0, "success").__dict__
+    result = []
+    item = {"image_id": "xxx1", "result": result, "private_data": {}}
+    imgPartList = []
+    imgPartList.append(ImagePart(101, 89, 100, 200).__dict__)
+    result.append({"attr_data": {"eventSort": 33892184}, "img_part_list": imgPartList})
+    retval["data"] = []
+    retval["data"].append(item)
     return jsonify(retval)
 
 
