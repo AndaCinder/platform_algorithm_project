@@ -5,6 +5,12 @@ from entity.bean import CapabilityInfo, MyEncoder, ResultMsg, TaskInfo, ImagePar
 
 app = Flask(__name__)
 
+def is_json(file):
+    try:
+        json.loads(file)
+    except Exception as e:
+        return False
+    return True
 
 @app.route('/api/ads/v1/setup-addr', methods=['POST'])
 def setup_addr():
@@ -12,6 +18,8 @@ def setup_addr():
     params = request.get_data()
     if params is None or params == "":
         return jsonify("Parameter can not be empty.", status=403)
+    if not is_json(params):
+        return '请输入json格式参数'
     # result_ip result_port license_ip license_port
     param_dict = json.loads(params)
     # 这里接受到参数再做运行
@@ -44,6 +52,8 @@ def start_task():
     get4Req = request.get_data()
     if get4Req is None or get4Req == "":
         return jsonify("Parameter can not be empty.", status=403)
+    if not is_json(get4Req):
+        return '请输入json格式参数'
     # 这里如果得到的json不规范会报错
     params = json.loads(get4Req)
     # task_id stream_url analysis_rules(obj[]) private_data(obj)
@@ -81,6 +91,8 @@ def images_analysis():
     params = request.get_data()
     if params is None or params == "":
         return jsonify("Parameter can not be empty.", status=403)
+    if not is_json(params):
+        return '请输入json格式参数'
     # {image_list:{image_id, image_type, data, url， analysis_rules， private_data}， sync}
     param_dict = json.loads(params)
     # 封装数据
